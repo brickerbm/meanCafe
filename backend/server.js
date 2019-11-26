@@ -11,7 +11,7 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://[server]');
+mongoose.connect('mongodb://127.0.0.1:27017/meancafe');
 
 const connection = mongoose.connection;
 
