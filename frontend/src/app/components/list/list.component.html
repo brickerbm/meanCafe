@@ -5,7 +5,43 @@
     <br><br>
     <mat-divider></mat-divider>
     <br>
-    <table mat-table [dataSource]="reports">
+    <div>
+      <mat-table [dataSource]="reports">
+        <ng-container matColumnDef="ID">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report._id }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="startTime">
+          <mat-header-cell *matHeaderCellDef> Start Time </mat-header-cell>
+          <mat-cell *matCellDef="let report"> {{ report.startTime }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="passed">
+            <mat-header-cell *matHeaderCellDef> Passed </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report.passed }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="skipped">
+            <mat-header-cell *matHeaderCellDef> Skipped </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report.skipped }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report.total }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let report" class="mat-column-right">
+              <!-- <button mat-button color="accent">View Config</button> -->
+              <!-- <button mat-button color="accent">Run Again</button> -->
+              <button mat-button color="primary">View</button>
+              <button mat-button color="warn" (click)="deleteReport(report._id)">Delete</button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+
+    <!-- <table mat-table [dataSource]="reports">
       <ng-container matColumnDef="startTime">
         <th mat-header-cell *matHeaderCellDef> Start Time </th>
         <td mat-cell *matCellDef="let element"> {{element.startTime}} </td>
@@ -14,14 +50,14 @@
       <ng-container matColumnDef="passed">
         <th mat-header-cell *matHeaderCellDef> Passed </th>
         <td mat-cell *matCellDef="let element"> {{element.passed}} </td>
-      </ng-container>
+      </ng-container> -->
 
-      <ng-container matColumnDef="failed">
+      <!-- <ng-container matColumnDef="failed">
         <th mat-header-cell *matHeaderCellDef> Failed </th>
-        <td mat-cell *matCellDef="let element"> {{element.failed}} </td>
-      </ng-container>
+        <td mat-cell *matCellDef="let element"> {{element.total - (element.skipped + element.passed)}} </td>
+      </ng-container> -->
 
-      <ng-container matColumnDef="skipped">
+      <!-- <ng-container matColumnDef="skipped">
         <th mat-header-cell *matHeaderCellDef> Skipped </th>
         <td mat-cell *matCellDef="let element"> {{element.skipped}} </td>
       </ng-container>
@@ -29,17 +65,24 @@
       <ng-container matColumnDef="total">
         <th mat-header-cell *matHeaderCellDef> Total </th>
         <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-      </ng-container>
+      </ng-container> -->
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </th>
-        <td mat-cell *matCellDef="let element" class="mat-column-right">
-          <button mat-button color="accent" (click)="viewConfig(element._id)">View Config</button>
+      <!-- <ng-container matColumnDef="actions"> -->
+        <!-- <th mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </th> -->
+        <!-- <td mat-cell *matCellDef="let element" class="mat-column-right"> -->
+          <!-- <button mat-button color="accent" (click)="viewConfig(element._id)">View Config</button> -->
           <!-- <button mat-button color="accent" (click)="">Run Again</button> -->
-          <button mat-button color="primary" (click)="viewReport(element._id)">View Report</button>
-          <button mat-button color="warn" (click)="deleteReport(element._id)">Delete</button>
-        </td>
-      </ng-container>
-    </table>
+          <!-- <button mat-button color="primary" (click)="viewReport(element._id)">View Report</button> -->
+          <!-- <button mat-button color="warn" (click)="deleteReport(element._id)">Delete</button> -->
+        <!-- </td> -->
+      <!-- </ng-container> -->
+    <!-- </table> -->
   </mat-card>
 </div>
+<!-- <div>
+  <ul>
+    <li *ngFor="let report of reports">
+      {{ report._id }}
+    </li>
+  </ul>
+</div> -->

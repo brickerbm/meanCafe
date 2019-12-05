@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
 export class ListComponent implements OnInit {
 
   reports: IReport[];
-  displayedColumns = ['startTime', 'passed', 'failed', 'skipped', 'total', 'Actions'];
+  displayedColumns = ['ID', 'startTime', 'passed', 'skipped', 'total', 'actions'];
 
   constructor(private reportService: ReportService, private router: Router) { }
 
   ngOnInit() {
+    this.fetchReports();
   }
 
   fetchReports() {

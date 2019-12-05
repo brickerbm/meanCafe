@@ -18,7 +18,7 @@ export class ReportService {
     passed: number,
     total: number,
     skipped: number,
-    failed: number,
+    // failed: number,
     fixtures: string[],
     warnings: string[]) {
     const report = {
@@ -28,15 +28,17 @@ export class ReportService {
       passed,
       total,
       skipped,
-      failed,
+      // failed,
       fixtures,
       warnings
     };
     return this.http.post('${this.uri}/reports/add', report);
   }
+
   // READ
   getReport() {
-    return this.http.get('${this.uri}/reports');
+    return this.http.get(`${this.uri}/reports`);
+    // return this.http.get('http://localHost:4000/reports');
   }
 
   getReportById(id) {

@@ -36,13 +36,14 @@ export interface IFixture {
 }
 
 export interface IReport {
+  id: string;
   startTime: string;
   endTime: string;
   userAgents: string[];
   passed: number;
   total: number;
   skipped: number;
-  failed: number;
+  // failed: number;
   fixtures: IFixture[];
   warnings: string[];
 }

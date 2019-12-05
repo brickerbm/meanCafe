@@ -20,6 +20,7 @@ import { ReportComponent } from './components/report/report.component';
 import { ConfigComponent } from './components/config/config.component';
 import { ReportService } from './report.service';
 import { ConfigService } from './config.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ConfigService } from './config.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatInputModule,
     MatOptionModule,
