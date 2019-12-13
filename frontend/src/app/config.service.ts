@@ -19,15 +19,15 @@ export class ConfigService {
       color,
       skipJsErrors
     };
-    return this.http.post('${this.uri}/configs/add', config);
+    return this.http.post(`${this.uri}/configs/add`, config);
   }
   // READ
   getConfigs() {
-    return this.http.get('${this.uri}/configs');
+    return this.http.get(`${this.uri}/configs`);
   }
 
   getConfigById(id) {
-    return this.http.get('${this.uri}/configs/${id}');
+    return this.http.get(`${this.uri}/configs/${id}`);
   }
 
   // UPDATE
@@ -39,11 +39,11 @@ export class ConfigService {
       color,
       skipJsErrors
     };
-    return this.http.post('${this.uri}/configs/update/${id}', config);
+    return this.http.post(`${this.uri}/configs/update/${id}`, config);
   }
 
   // DELETE
   deleteConfig(id) {
-    return this.http.get('${this.uri}/configs/delete/${id}');
+    return this.http.get(`${this.uri}/configs/delete/${id}`);
   }
 }

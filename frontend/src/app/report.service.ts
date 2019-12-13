@@ -32,17 +32,16 @@ export class ReportService {
       fixtures,
       warnings
     };
-    return this.http.post('${this.uri}/reports/add', report);
+    return this.http.post(`${this.uri}/reports/add`, report);
   }
 
   // READ
   getReport() {
     return this.http.get(`${this.uri}/reports`);
-    // return this.http.get('http://localHost:4000/reports');
   }
 
   getReportById(id) {
-    return this.http.get('${this.uri}/reports/${id}');
+    return this.http.get(`${this.uri}/reports/${id}`);
   }
 
   // UPDATE
@@ -68,11 +67,11 @@ export class ReportService {
         fixtures,
         warnings
       };
-      return this.http.post('${this.uri}/reports/update/${id}', report);
+      return this.http.post(`${this.uri}/reports/update/${id}`, report);
   }
 
   // DELETE
   deleteReport(id) {
-    return this.http.get('${this.uri}/reports/delete/${id}');
+    return this.http.get(`${this.uri}/reports/delete/${id}`);
   }
 }

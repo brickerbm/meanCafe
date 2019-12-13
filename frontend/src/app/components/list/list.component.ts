@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material';
 import { IReport } from '../../models/report.model';
 import { ReportService } from '../../report.service';
 import { Router } from '@angular/router';
+import { TransferService } from 'src/app/transfer.service';
 
 @Component({
   selector: 'app-list',
@@ -13,16 +14,18 @@ import { Router } from '@angular/router';
 export class ListComponent implements OnInit {
 
   reports: IReport[];
-  displayedColumns = ['ID', 'startTime', 'passed', 'skipped', 'total', 'actions'];
+  displayedColumns = ['ID', 'startTime', 'passed', 'skipped', 'failed', 'total', 'actions'];
+  reportID: string;
 
-  constructor(private reportService: ReportService, private router: Router) { }
+  constructor(private rs: ReportService, private ts: TransferService, private router: Router) { }
 
   ngOnInit() {
     this.fetchReports();
+    this.ts.currentVal.subscribe(currentID => this.reportID = currentID);
   }
 
   fetchReports() {
-    this.reportService
+    this.rs
       .getReport()
       .subscribe((data: IReport[]) => {
         this.reports = data;
@@ -32,7 +35,8 @@ export class ListComponent implements OnInit {
   }
 
   viewReport(id) {
-    this.router.navigate(['/report/${id}']);
+    this.ts.changeVal(id);
+    // this.router.navigate(['/report/${id}']);
   }
 
   viewConfig(id) {
@@ -40,7 +44,7 @@ export class ListComponent implements OnInit {
   }
 
   deleteReport(id) {
-    this.reportService.deleteReport(id).subscribe(() => {
+    this.rs.deleteReport(id).subscribe(() => {
       this.fetchReports();
     });
   }

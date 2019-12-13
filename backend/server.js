@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import Config from './models/config.model';
 import Report from './models/report.model';
+import fs from 'fs';
 
 const app = express();
 const router = express.Router();
@@ -163,3 +164,11 @@ router.route('/reports/delete/:id').get((req, res) => {
         }
     });
 });
+
+// file writing
+function writeFiles(path, objToWrite) {
+    fs.writeFile(path, objToWrite, (err) => {
+        if (err) throw err;
+        console.log('Object written to ' + path);
+    });
+}

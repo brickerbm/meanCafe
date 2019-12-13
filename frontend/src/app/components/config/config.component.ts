@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IConfig } from 'src/app/models/config.model';
 
 @Component({
   selector: 'app-config',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigComponent implements OnInit {
 
-  constructor() { }
+  allBrowsers = true;
+  runHeadless = true;
+  runDocker = false;
+  allFixtures = true;
+  skipErrors = true;
+
+  configObj: IConfig;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
