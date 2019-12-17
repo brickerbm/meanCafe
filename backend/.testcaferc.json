@@ -1,0 +1,12 @@
+{
+    "browsers": ["chrome"],
+    "src": ["./testing/fixtures"],
+    "reporter": [
+        {
+            "name": "JSON",
+            "output": "./testing/report.json"
+        }
+    ],
+    "color": true,
+    "skipJsErrors": true
+}
