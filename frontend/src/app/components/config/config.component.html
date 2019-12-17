@@ -1,1 +1,41 @@
-<p>config works!</p>
+<mat-card>
+  <mat-card-title>
+    Test Configuration
+  </mat-card-title>
+
+  <mat-card-content>
+      <div class="box box-default">
+          <code>
+            <pre>{{ config | json }}</pre>
+          </code>
+        </div>
+    <form>
+      <table>
+        <tr>
+          <td>
+            <span>Browsers</span><br><br>
+            <mat-checkbox checked="allBrowsers" (click)="toggleAllBrowsers()">Use all browsers</mat-checkbox>
+            <div *ngIf="!allBrowsers">
+              <mat-checkbox *ngFor="let browser of browsers">{{ browser.name }}</mat-checkbox>
+            </div>
+            <br>
+            <mat-slide-toggle checked="runHeadless" (click)="toggleRunHeadless()">Run headless</mat-slide-toggle>
+          </td>
+          <br>
+        </tr>
+
+        <br><br>
+
+        <tr>
+          <td>
+            <span>Fixtures</span><br><br>
+            <mat-checkbox checked="allFixtures" (click)="toggleAllFixtures()">Use all fixtures</mat-checkbox>
+            <div *ngIf="!allFixtures">
+              <mat-checkbox *ngFor="let fixture of fixtures">{{ fixture.name }}</mat-checkbox>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+</mat-card>

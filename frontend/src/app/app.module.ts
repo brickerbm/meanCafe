@@ -8,9 +8,11 @@ import { MatToolbarModule,
         MatIconModule,
         MatButtonModule,
         MatCardModule,
+        MatCheckboxModule,
         MatTableModule,
         MatDividerModule,
-        MatSnackBarModule } from '@angular/material';
+        MatSnackBarModule,
+        MatSlideToggleModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,9 +43,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatTableModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
   ],
   providers: [
     ReportService,
