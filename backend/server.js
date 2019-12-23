@@ -9,6 +9,8 @@ import fs from 'fs';
 const app = express();
 const router = express.Router();
 
+let fixtures = fs.readdirSync('./testing/fixtures').files;
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -70,6 +72,24 @@ router.route('/reports').get((req, res) => {
         }
     });
 });
+
+router.route('/fixtures').get((req, res) => {
+    fs.readdir('./testing/fixtures', (err, items) => {
+        // console.log(items);
+        // for (let i = 0; i < items.length; i++) {
+        //     console.log(items[i]);
+        // }
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(items);
+        }
+    });
+});
+
+// router.get('/fixtures', function(req, res, next) {
+//     res.render('index', { data: JSON.stringify(fixtures) });
+// });
 
 // Read specific config/report
 router.route('/configs/:id').get((req, res) => {

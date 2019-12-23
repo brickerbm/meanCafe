@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IConfig } from 'src/app/models/config.model';
 import { ConfigBuilderService } from 'src/app/config-builder.service';
+import { FixtureService } from 'src/app/fixture.service';
 
 @Component({
   selector: 'app-config',
@@ -32,13 +33,26 @@ export class ConfigComponent implements OnInit {
     {name: 'test3', path: './fixtures/test3.ts'}
   ];
 
+  fixList: string[];
+
   config: IConfig;
 
-  constructor(private cbs: ConfigBuilderService) {
+  constructor(private cbs: ConfigBuilderService, private fs: FixtureService) {
   }
 
   ngOnInit() {
+    this.fetchFixtures();
     this.cbs.currentConfig.subscribe(currentConf => this.config = currentConf);
+  }
+
+  fetchFixtures() {
+    this.fs
+      .getFixtures()
+      .subscribe((data: string[]) => {
+        this.fixList = data;
+        console.log('Data requested...');
+        console.log(this.fixList);
+      });
   }
 
   toggleAllBrowsers() {
@@ -51,5 +65,13 @@ export class ConfigComponent implements OnInit {
 
   toggleRunHeadless() {
     this.runHeadless = !this.runHeadless;
+  }
+
+  chooseBrowser(browser: string) {
+    if (this.runHeadless) {
+      console.log(browser + ':headless');
+    } else {
+      console.log(browser);
+    }
   }
 }

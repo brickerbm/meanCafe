@@ -8,6 +8,8 @@
           <code>
             <pre>{{ config | json }}</pre>
           </code>
+          <br>
+          <pre>{{ fixList| json }}</pre>
         </div>
     <form>
       <table>
@@ -16,7 +18,7 @@
             <span>Browsers</span><br><br>
             <mat-checkbox checked="allBrowsers" (click)="toggleAllBrowsers()">Use all browsers</mat-checkbox>
             <div *ngIf="!allBrowsers">
-              <mat-checkbox *ngFor="let browser of browsers">{{ browser.name }}</mat-checkbox>
+              <mat-checkbox *ngFor="let browser of browsers" (click)="chooseBrowser(browser.tag)">{{ browser.name }}</mat-checkbox>
             </div>
             <br>
             <mat-slide-toggle checked="runHeadless" (click)="toggleRunHeadless()">Run headless</mat-slide-toggle>
