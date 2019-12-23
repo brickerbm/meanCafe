@@ -3,12 +3,12 @@ import { IConfig } from './models/config.model';
 import { BehaviorSubject } from 'rxjs';
 
 const DEFAULT_CONFIG = {
-  browsers: ['all:headless'],
-  src: [],
+  browsers: ['chrome:headless'],
+  src: ['./testing/fixtures'],
   reporter:
       {
           name: 'JSON',
-          output: './src/assets/report.json'
+          output: './testing/report.json'
       },
   color: true,
   skipJsErrors: true

@@ -1,10 +1,10 @@
 {
-    "browsers": ["chrome"],
+    "browsers": ["chrome:headless"],
     "src": ["./testing/fixtures"],
     "reporter": [
         {
             "name": "JSON",
-            "output": "./testing/report.json"
+            "output": " "
         }
     ],
     "color": true,
