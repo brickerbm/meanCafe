@@ -50,7 +50,7 @@ router.route('/reports/add').post((req, res) => {
         });
 });
 
-// Read all configs/reports
+// Read all configs/reports/fixture file names
 router.route('/configs').get((req, res) => {
     Config.find((err, configs) => {
         if (err) {
@@ -75,10 +75,6 @@ router.route('/reports').get((req, res) => {
 
 router.route('/fixtures').get((req, res) => {
     fs.readdir('./testing/fixtures', (err, items) => {
-        // console.log(items);
-        // for (let i = 0; i < items.length; i++) {
-        //     console.log(items[i]);
-        // }
         if (err) {
             console.log(err);
         } else {
@@ -86,10 +82,6 @@ router.route('/fixtures').get((req, res) => {
         }
     });
 });
-
-// router.get('/fixtures', function(req, res, next) {
-//     res.render('index', { data: JSON.stringify(fixtures) });
-// });
 
 // Read specific config/report
 router.route('/configs/:id').get((req, res) => {

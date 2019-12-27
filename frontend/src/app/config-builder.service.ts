@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IConfig } from './models/config.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable, merge } from 'rxjs';
+import { withLatestFrom, concatMap, map } from 'rxjs/operators';
 
 const DEFAULT_CONFIG = {
-  browsers: ['chrome:headless'],
+  browsers: ['all:headless'],
   src: ['./testing/fixtures'],
   reporter:
       {
@@ -14,16 +15,79 @@ const DEFAULT_CONFIG = {
   skipJsErrors: true
 };
 
+const browsers = ['all:headless'];
+const src = ['./testing/fixtures'];
+
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigBuilderService {
 
 
-  private configSource = new BehaviorSubject<IConfig>(DEFAULT_CONFIG);
+  // tslint:disable-next-line: variable-name
+  private _configSource$ = new BehaviorSubject<IConfig>(DEFAULT_CONFIG);
+  currentConfig = this._configSource$.asObservable();
 
-  currentConfig = this.configSource.asObservable();
+  // tslint:disable-next-line: variable-name
+  private _browsers$ = new BehaviorSubject<string[]>(browsers);
+  curBrowsers = this._browsers$.asObservable();
+
+  // tslint:disable-next-line: variable-name
+  private _src$ = new BehaviorSubject<string[]>(src);
+  curSrc = this._src$.asObservable();
+
   constructor() { }
 
+  toggleHeadless() {
+    let browserArr: string[] = this._browsers$.getValue();
+    if (browserArr.length > 0 && browserArr[0].includes(':headless')) {
+      browserArr = browserArr.map(str => str.replace(':headless', ''));
+    } else if (browserArr.length > 0 && !browserArr[0].includes(':headless')) {
+      browserArr = browserArr.map(str => str + ':headless');
+    }
+    this._browsers$.next(browserArr);
+  }
 
+  toggleBrowser(browser: string) {
+    const browserArr: string[] = this._browsers$.getValue();
+    if (browserArr.indexOf(browser) < 0) {
+      browserArr.push(browser);
+    } else if (browserArr.indexOf(browser) >= 0) {
+      browserArr.splice(browserArr.indexOf(browser), 1);
+    }
+    this._browsers$.next(browserArr);
+    // this._configSource$.next({browsers: browserArr, ...});
+  }
+
+  toggleAllBrowsers(headless: boolean, allBrowsers: boolean) {
+    let browserArr: string[] = this._browsers$.getValue();
+    if (allBrowsers && headless) {
+      browserArr = ['all:headless'];
+    } else if (allBrowsers && !headless) {
+      browserArr = ['all'];
+    } else if (!allBrowsers) {
+      browserArr = [];
+    }
+    this._browsers$.next(browserArr);
+  }
+
+  toggleFixture(fixture: string) {
+    const srcArr: string[] = this._src$.getValue();
+    if (srcArr.indexOf(fixture) < 0) {
+      srcArr.push(fixture);
+    } else if (srcArr.indexOf(fixture) >= 0) {
+      srcArr.splice(srcArr.indexOf(fixture), 1);
+    }
+    this._src$.next(srcArr);
+  }
+
+  toggleAllFixtures(allFixtures: boolean) {
+    let srcArr: string[] = this._src$.getValue();
+    if (allFixtures) {
+      srcArr = ['./testing/fixtures']
+    } else {
+      srcArr = [];
+    }
+    this._src$.next(srcArr);
+  }
 }

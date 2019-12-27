@@ -5,11 +5,14 @@
 
   <mat-card-content>
       <div class="box box-default">
-          <code>
+          <!-- <code>
             <pre>{{ config | json }}</pre>
-          </code>
+          </code> -->
+          <!-- <br>
+          <pre>{{ fixList| json }}</pre> -->
+          <pre>{{ myBrowsers | json }}</pre>
           <br>
-          <pre>{{ fixList| json }}</pre>
+          <pre>{{ mySrc | json }}</pre>
         </div>
     <form>
       <table>
@@ -33,11 +36,13 @@
             <span>Fixtures</span><br><br>
             <mat-checkbox checked="allFixtures" (click)="toggleAllFixtures()">Use all fixtures</mat-checkbox>
             <div *ngIf="!allFixtures">
-              <mat-checkbox *ngFor="let fixture of fixtures">{{ fixture.name }}</mat-checkbox>
+              <mat-checkbox *ngFor="let fixture of fixList" (click)="chooseFixture(fixture)">{{ peelFixtureName(fixture) }}</mat-checkbox>
             </div>
           </td>
         </tr>
       </table>
     </form>
   </mat-card-content>
+  <button mat-raised-button color="primary" (click)="runTests()">Run Tests</button>
+  <button mat-raised-button color="warning" routerLink="/list">Cancel</button>
 </mat-card>
