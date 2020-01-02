@@ -24,6 +24,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/meancafe');
 const connection = mongoose.connection;
 
 connection.once('open', () => {
+    // db = database;
     console.log('MongoDB database connection established successfully!');
 });
 
@@ -55,19 +56,31 @@ router.route('/config/write').post((req, res) => {
             console.log(data);
             res.send('Config file successfully saved!');
             const child = spawn('testcafe');
+            child.on('close', (msg) => {
+                console.log('finished running tests');
+                let rawData = fs.readFileSync('./testing/report.json');
+                let report = JSON.parse(rawData);
+                console.log(report);
+                connection.collection('reports').insert(report), (err) => {
+                    if (err) {
+                        console.log('Error saving report to database'); 
+                    } else {
+                        console.log('Report successfully saved');
+                    }
+                };
+            });
         }
     });
-    // spawn('testcafe');
 });
 
 router.route('/reports/add').post((req, res) => {
     let report = new Report(req.body);
     report.save()
         .then(report => {
-            res.status(200).json({'config': 'Added successfully'});
+            res.status(200).json({'report': 'Added successfully'});
         })
         .catch(err => {
-            res.status(400).send('Failed to create new config');
+            res.status(400).send('Failed to create new report');
         });
 });
 
