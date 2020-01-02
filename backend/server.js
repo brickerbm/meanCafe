@@ -41,7 +41,7 @@ router.route('/configs/add').post((req, res) => {
 });
 
 router.route('/config/write').post((req, res) => {
-    let data = req.body;
+    let data = JSON.stringify(req.body);
     // console.log(data);
     fs.writeFile('./.testcaferc.json', data, (err) => {
         if (err) {
@@ -49,7 +49,7 @@ router.route('/config/write').post((req, res) => {
         }
         else {
             console.log(data);
-            console.log('Config file successfully saved!');
+            res.send('Config file successfully saved!');
         }
     });
 });

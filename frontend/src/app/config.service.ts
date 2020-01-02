@@ -13,11 +13,13 @@ export class ConfigService {
   constructor(private http: HttpClient) { }
 
   // WRITE CONFIG TO .testcaferc.json
-  writeConfigFile(config: IConfig) {
+  writeConfigFile(postData: IConfig) {
     // console.log(config);
-    const data = JSON.stringify(config);
+    // const data = JSON.stringify(config);
     // console.log(data);
-    return this.http.post(`${this.uri}/config/write`, data);
+    this.http.post(`${this.uri}/config/write`, postData).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 
   // CREATE
