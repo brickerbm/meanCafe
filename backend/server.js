@@ -5,6 +5,10 @@ import mongoose from 'mongoose';
 import Config from './models/config.model';
 import Report from './models/report.model';
 import fs from 'fs';
+// import spawn from 'child_process';
+
+var spawn = require('child_process').spawn;
+// child = spawn('testcafe');
 
 const app = express();
 const router = express.Router();
@@ -50,8 +54,10 @@ router.route('/config/write').post((req, res) => {
         else {
             console.log(data);
             res.send('Config file successfully saved!');
+            const child = spawn('testcafe');
         }
     });
+    // spawn('testcafe');
 });
 
 router.route('/reports/add').post((req, res) => {
