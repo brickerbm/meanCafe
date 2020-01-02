@@ -28,6 +28,11 @@ export class ConfigBuilderService {
   private _configSource$ = new BehaviorSubject<IConfig>(DEFAULT_CONFIG);
   currentConfig = this._configSource$.asObservable();
 
+  private action = {
+    updateBrowsers: new Subject(),
+    updateFixtures: new Subject()
+  };
+
   // tslint:disable-next-line: variable-name
   private _browsers$ = new BehaviorSubject<string[]>(browsers);
   curBrowsers = this._browsers$.asObservable();
@@ -38,6 +43,14 @@ export class ConfigBuilderService {
 
   constructor() { }
 
+  // private updateBrowsers: Observable<IConfig> = this.action.updateBrowsers.pipe();
+  updateConfig() {
+    let myConfig: IConfig = this._configSource$.getValue();
+    myConfig.browsers = this._browsers$.getValue();
+    myConfig.src = this._src$.getValue();
+    this._configSource$.next(myConfig);
+  }
+
   toggleHeadless() {
     let browserArr: string[] = this._browsers$.getValue();
     if (browserArr.length > 0 && browserArr[0].includes(':headless')) {
@@ -46,6 +59,7 @@ export class ConfigBuilderService {
       browserArr = browserArr.map(str => str + ':headless');
     }
     this._browsers$.next(browserArr);
+    this.updateConfig();
   }
 
   toggleBrowser(browser: string) {
@@ -57,6 +71,7 @@ export class ConfigBuilderService {
     }
     this._browsers$.next(browserArr);
     // this._configSource$.next({browsers: browserArr, ...});
+    this.updateConfig();
   }
 
   toggleAllBrowsers(headless: boolean, allBrowsers: boolean) {
@@ -69,6 +84,7 @@ export class ConfigBuilderService {
       browserArr = [];
     }
     this._browsers$.next(browserArr);
+    this.updateConfig();
   }
 
   toggleFixture(fixture: string) {
@@ -79,15 +95,17 @@ export class ConfigBuilderService {
       srcArr.splice(srcArr.indexOf(fixture), 1);
     }
     this._src$.next(srcArr);
+    this.updateConfig();
   }
 
   toggleAllFixtures(allFixtures: boolean) {
     let srcArr: string[] = this._src$.getValue();
     if (allFixtures) {
-      srcArr = ['./testing/fixtures']
+      srcArr = ['./testing/fixtures'];
     } else {
       srcArr = [];
     }
     this._src$.next(srcArr);
+    this.updateConfig();
   }
 }

@@ -97,7 +97,7 @@ export class ConfigComponent implements OnInit {
   }
 
   runTests() {
-    //child process run tests
+    // child process run tests
     this.router.navigateByUrl('list');
   }
 }
