@@ -1,1 +1,1 @@
-{"browsers":["all:headless"],"src":["./testing/fixtures"],"reporter":{"name":"JSON","output":"./testing/report.json"},"color":true,"skipJsErrors":true}
+{"browsers":["chrome:headless"],"src":["./testing/fixtures/landing-page.fixture.ts"],"reporter":{"name":"JSON","output":"./testing/report.json"},"color":true,"skipJsErrors":true}

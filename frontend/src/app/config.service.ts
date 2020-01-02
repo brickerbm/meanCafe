@@ -14,9 +14,6 @@ export class ConfigService {
 
   // WRITE CONFIG TO .testcaferc.json
   writeConfigFile(postData: IConfig) {
-    // console.log(config);
-    // const data = JSON.stringify(config);
-    // console.log(data);
     this.http.post(`${this.uri}/config/write`, postData).subscribe(responseData => {
       console.log(responseData);
     });
@@ -24,13 +21,6 @@ export class ConfigService {
 
   // CREATE
   addConfig(config: IConfig) {
-    // const config = {
-    //   browsers,
-    //   src,
-    //   reporter: {name: reporterName, output: reporterOutput},
-    //   color,
-    //   skipJsErrors
-    // };
     return this.http.post(`${this.uri}/configs/add`, config);
   }
   // READ
