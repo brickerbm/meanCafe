@@ -13,6 +13,7 @@ let fixtures = fs.readdirSync('./testing/fixtures').files;
 
 app.use(cors());
 app.use(bodyParser.json());
+// app.use(bodayParser.urlencoded({ extended: flase }));
 
 mongoose.connect('mongodb://127.0.0.1:27017/meancafe');
 
@@ -37,6 +38,20 @@ router.route('/configs/add').post((req, res) => {
         .catch(err => {
             res.status(400).send('Failed to create new config');
         });
+});
+
+router.route('/config/write').post((req, res) => {
+    let data = req.body;
+    // console.log(data);
+    fs.writeFile('./.testcaferc.json', data, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(data);
+            console.log('Config file successfully saved!');
+        }
+    });
 });
 
 router.route('/reports/add').post((req, res) => {

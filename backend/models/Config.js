@@ -5,19 +5,13 @@ const Schema = mongoose.Schema;
 let Config = new Schema ({
     browsers: {
         type: Array,
-        default: ['chrome:headless']
+        default: ['all:headless']
     },
     src: {
         type: Array,
-        default: ['./e2e/src']
+        default: ['./testing/fixtures']
     },
     reporter: [
-        {
-            name: {
-                type: String,
-                default: 'spec'
-            }
-        },
         {
             name: {
                 type: String,
@@ -25,7 +19,7 @@ let Config = new Schema ({
             },
             output: {
                 type: String,
-                default: './src/assets/report.json'
+                default: './testing/report.json'
             }
         }
     ],

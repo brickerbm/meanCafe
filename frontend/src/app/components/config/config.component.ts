@@ -3,6 +3,7 @@ import { IConfig } from 'src/app/models/config.model';
 import { ConfigBuilderService } from 'src/app/config-builder.service';
 import { FixtureService } from 'src/app/fixture.service';
 import { Router } from '@angular/router';
+import { ConfigService } from 'src/app/config.service';
 
 @Component({
   selector: 'app-config',
@@ -20,7 +21,7 @@ export class ConfigComponent implements OnInit {
   browsers = [
     {name: 'Google Chrome', tag: 'chrome'},
     {name: 'Google Chrome Canary', tag: 'chrome-canary'},
-    {name: 'Chromeium', tag: 'chromium'},
+    {name: 'Chromium', tag: 'chromium'},
     {name: 'Internet Explorer', tag: 'ie'},
     {name: 'Microsoft Edge', tag: 'edge'},
     {name: 'Mozilla Firefox', tag: 'firefox'},
@@ -37,12 +38,10 @@ export class ConfigComponent implements OnInit {
   fixList: string[];
 
   config: IConfig;
-  // config = this.cbs.myConfig$;
   myBrowsers: string[];
   mySrc: string[];
 
-
-  constructor(private cbs: ConfigBuilderService, private fs: FixtureService, private router: Router) {
+  constructor(private cbs: ConfigBuilderService, private cs: ConfigService, private fs: FixtureService, private router: Router) {
   }
 
   ngOnInit() {
@@ -50,6 +49,10 @@ export class ConfigComponent implements OnInit {
     this.cbs.currentConfig.subscribe(currentConf => this.config = currentConf);
     this.cbs.curBrowsers.subscribe(curBrow => this.myBrowsers = curBrow);
     this.cbs.curSrc.subscribe(cSrc => this.mySrc = cSrc);
+    this.resetConfig();
+    // console.log('All Browsers On: ' + this.allBrowsers);
+    // console.log('All Fixtures On: ' + this.allFixtures);
+    // console.log('Headless: ' + this.runHeadless);
   }
 
   fetchFixtures() {
@@ -93,10 +96,18 @@ export class ConfigComponent implements OnInit {
 
   chooseFixture(fixture: string) {
     console.log(fixture);
-    this.cbs.toggleFixture(fixture);
+    this.cbs.toggleFixture('./testing/fixtures/' + fixture);
+  }
+
+  resetConfig() {
+    this.cbs.toggleAllBrowsers(this.runHeadless, this.allBrowsers);
+    this.cbs.toggleAllFixtures(this.allFixtures);
   }
 
   runTests() {
+    // this.cs.addConfig(this.config);
+    this.cs.writeConfigFile(this.config);
+    // console.log(this.cs.writeConfigFile(this.config));
     // child process run tests
     this.router.navigateByUrl('list');
   }
