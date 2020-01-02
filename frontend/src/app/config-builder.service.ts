@@ -28,11 +28,6 @@ export class ConfigBuilderService {
   private _configSource$ = new BehaviorSubject<IConfig>(DEFAULT_CONFIG);
   currentConfig = this._configSource$.asObservable();
 
-  private action = {
-    updateBrowsers: new Subject(),
-    updateFixtures: new Subject()
-  };
-
   // tslint:disable-next-line: variable-name
   private _browsers$ = new BehaviorSubject<string[]>(browsers);
   curBrowsers = this._browsers$.asObservable();
@@ -43,9 +38,8 @@ export class ConfigBuilderService {
 
   constructor() { }
 
-  // private updateBrowsers: Observable<IConfig> = this.action.updateBrowsers.pipe();
   updateConfig() {
-    let myConfig: IConfig = this._configSource$.getValue();
+    const myConfig: IConfig = this._configSource$.getValue();
     myConfig.browsers = this._browsers$.getValue();
     myConfig.src = this._src$.getValue();
     this._configSource$.next(myConfig);
@@ -70,7 +64,6 @@ export class ConfigBuilderService {
       browserArr.splice(browserArr.indexOf(browser), 1);
     }
     this._browsers$.next(browserArr);
-    // this._configSource$.next({browsers: browserArr, ...});
     this.updateConfig();
   }
 
