@@ -20,7 +20,41 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <!-- <p>Total Stories: {{  }}</p> -->
+        <p>Total Stories: {{ fixture.total }}</p>
+        <p>Total Passed:  {{ fixture.passed }}</p>
+        <p>Total Failed:  {{ fixture.failed }}</p>
+        <p>Total Skipped: {{ fixture.skipped }}</p>
+
+        <div *ngFor="let test of fixture.tests">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title [style.color]="test.errs.length > 0 && !test.skipped ? '#FA8072' : test.skipped ? '#FFF00' : '#32CD32'">
+                Test ID goes here
+                <i class="material-icons" *ngIf="test.errs.length > 0 && !test.skipped">error</i>
+                <i class="material-icons" *ngIf="test.skipped">warning</i>
+                <i class="material-icons" *ngIf="test.errs.length === 0 && !test.skipped">done</i>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ test.name }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <p>Duration: {{ test.durationMs }}</p>
+
+            <mat-expansion-panel *ngIf="test.errs.length > 0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Errors
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <p *ngFor="let error of test.errs; index as errorId">{{ error }}</p>
+
+            </mat-expansion-panel>
+
+          </mat-expansion-panel>
+
+        </div>
       </mat-expansion-panel>
     </div>
   </div>
