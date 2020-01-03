@@ -5,3 +5,23 @@
     <pre>{{ report | json }}</pre>
   </code>
 </div>
+
+<ng-container>
+  <h2>Fixtures</h2>
+  <div *ngFor="let fixture of report.fixtures">
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ fixture.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Something about the fixture meta data
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- <p>Total Stories: {{  }}</p> -->
+      </mat-expansion-panel>
+    </div>
+  </div>
+</ng-container>

@@ -25,6 +25,13 @@ export class ReportComponent implements OnInit {
     .subscribe((data: IReport) => {
       this.report = data;
       console.log('Data Requested');
+      this.report.failed = this.rs.getTotalFailed(this.report);
+      for (const item of this.report.fixtures) {
+        item.passed = this.rs.getNumPassed(item);
+        item.failed = this.rs.getNumFailed(item);
+        item.skipped = this.rs.getNumSkipped(item);
+        item.total = item.tests.length;
+      }
       console.log(this.report);
     });
   }

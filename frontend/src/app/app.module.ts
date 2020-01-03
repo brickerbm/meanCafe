@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule,
         MatFormFieldModule,
+        MatExpansionModule,
         MatInputModule,
         MatOptionModule,
         MatSelectModule,
@@ -47,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   providers: [
     ReportService,

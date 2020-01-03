@@ -30,6 +30,17 @@ export class ListComponent implements OnInit {
       .subscribe((data: IReport[]) => {
         this.reports = data;
         console.log('Data requested...');
+        // Added to fill out IReport objects
+        for (const report of this.reports) {
+          report.failed = this.rs.getTotalFailed(report);
+          for (const item of report.fixtures) {
+            item.passed = this.rs.getNumPassed(item);
+            item.failed = this.rs.getNumFailed(item);
+            item.skipped = this.rs.getNumSkipped(item);
+            item.total = item.tests.length;
+          }
+        }
+        // End addition
         console.log(this.reports);
       });
   }
@@ -50,10 +61,10 @@ export class ListComponent implements OnInit {
   }
 
   dateManipulator(dateString: string) {
-    let dateObj = new Date(dateString);
-    let date = dateObj.getDate();
-    let month = dateObj.getMonth();
-    let year = dateObj.getFullYear();
+    const dateObj = new Date(dateString);
+    // let date = dateObj.getDate();
+    // let month = dateObj.getMonth();
+    // let year = dateObj.getFullYear();
     return dateObj.toLocaleString('en-GB', {
       day: 'numeric',
       month: 'numeric',
