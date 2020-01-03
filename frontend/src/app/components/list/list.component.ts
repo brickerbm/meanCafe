@@ -50,10 +50,10 @@ export class ListComponent implements OnInit {
   }
 
   dateManipulator(dateString: string) {
-    let dateObj = new Date(dateString);
-    let date = dateObj.getDate();
-    let month = dateObj.getMonth();
-    let year = dateObj.getFullYear();
+    const dateObj = new Date(dateString);
+    // let date = dateObj.getDate();
+    // let month = dateObj.getMonth();
+    // let year = dateObj.getFullYear();
     return dateObj.toLocaleString('en-GB', {
       day: 'numeric',
       month: 'numeric',
