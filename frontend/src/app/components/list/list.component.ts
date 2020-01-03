@@ -14,7 +14,7 @@ import { TransferService } from 'src/app/transfer.service';
 export class ListComponent implements OnInit {
 
   reports: IReport[];
-  displayedColumns = ['ID', 'startTime', 'passed', 'skipped', 'failed', 'total', 'actions'];
+  displayedColumns = ['startTime', 'passed', 'skipped', 'failed', 'total', 'actions'];
   reportID: string;
 
   constructor(private rs: ReportService, private ts: TransferService, private router: Router) { }
@@ -47,5 +47,23 @@ export class ListComponent implements OnInit {
     this.rs.deleteReport(id).subscribe(() => {
       this.fetchReports();
     });
+  }
+
+  dateManipulator(dateString: string) {
+    let dateObj = new Date(dateString);
+    let date = dateObj.getDate();
+    let month = dateObj.getMonth();
+    let year = dateObj.getFullYear();
+    return dateObj.toLocaleString('en-GB', {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  pad(n) {
+    return n < 10 ? '0' + n : n;
   }
 }
