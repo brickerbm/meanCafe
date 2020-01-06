@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { IReport } from '../../models/report.model';
-import { ReportService } from '../../report.service';
+import { ReportService } from '../../services/report.service';
 import { Router } from '@angular/router';
-import { TransferService } from 'src/app/transfer.service';
+import { TransferService } from 'src/app/services/transfer.service';
 
 @Component({
   selector: 'app-list',
@@ -16,12 +16,17 @@ export class ListComponent implements OnInit {
   reports: IReport[];
   displayedColumns = ['startTime', 'passed', 'skipped', 'failed', 'total', 'actions'];
   reportID: string;
+  dataSource;
 
   constructor(private rs: ReportService, private ts: TransferService, private router: Router) { }
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.fetchReports();
     this.ts.currentVal.subscribe(currentID => this.reportID = currentID);
+    this.dataSource = new MatTableDataSource(this.reports);
+    this.dataSource.sort = this.sort;
   }
 
   fetchReports() {

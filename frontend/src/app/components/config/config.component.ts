@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IConfig } from 'src/app/models/config.model';
-import { ConfigBuilderService } from 'src/app/config-builder.service';
-import { FixtureService } from 'src/app/fixture.service';
+import { ConfigBuilderService } from 'src/app/services/config-builder.service';
+import { FixtureService } from 'src/app/services/fixture.service';
 import { Router } from '@angular/router';
-import { ConfigService } from 'src/app/config.service';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-config',

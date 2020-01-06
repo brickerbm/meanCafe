@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TransferService } from 'src/app/transfer.service';
-import { ReportService } from 'src/app/report.service';
+import { TransferService } from 'src/app/services/transfer.service';
+import { ReportService } from 'src/app/services/report.service';
 import { IReport } from 'src/app/models/report.model';
 
 @Component({
