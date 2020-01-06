@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { IReport } from '../../models/report.model';
-import { ReportService } from '../../report.service';
+import { ReportService } from '../../services/report.service';
 import { Router } from '@angular/router';
-import { TransferService } from 'src/app/transfer.service';
+import { TransferService } from 'src/app/services/transfer.service';
 
 @Component({
   selector: 'app-list',
@@ -16,12 +16,17 @@ export class ListComponent implements OnInit {
   reports: IReport[];
   displayedColumns = ['startTime', 'passed', 'skipped', 'failed', 'total', 'actions'];
   reportID: string;
+  dataSource;
 
   constructor(private rs: ReportService, private ts: TransferService, private router: Router) { }
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.fetchReports();
     this.ts.currentVal.subscribe(currentID => this.reportID = currentID);
+    this.dataSource = new MatTableDataSource(this.reports);
+    this.dataSource.sort = this.sort;
   }
 
   fetchReports() {
@@ -30,6 +35,17 @@ export class ListComponent implements OnInit {
       .subscribe((data: IReport[]) => {
         this.reports = data;
         console.log('Data requested...');
+        // Added to fill out IReport objects
+        for (const report of this.reports) {
+          report.failed = this.rs.getTotalFailed(report);
+          for (const item of report.fixtures) {
+            item.passed = this.rs.getNumPassed(item);
+            item.failed = this.rs.getNumFailed(item);
+            item.skipped = this.rs.getNumSkipped(item);
+            item.total = item.tests.length;
+          }
+        }
+        // End addition
         console.log(this.reports);
       });
   }
@@ -50,10 +66,10 @@ export class ListComponent implements OnInit {
   }
 
   dateManipulator(dateString: string) {
-    let dateObj = new Date(dateString);
-    let date = dateObj.getDate();
-    let month = dateObj.getMonth();
-    let year = dateObj.getFullYear();
+    const dateObj = new Date(dateString);
+    // let date = dateObj.getDate();
+    // let month = dateObj.getMonth();
+    // let year = dateObj.getFullYear();
     return dateObj.toLocaleString('en-GB', {
       day: 'numeric',
       month: 'numeric',
