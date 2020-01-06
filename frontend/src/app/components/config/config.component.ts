@@ -29,11 +29,11 @@ export class ConfigComponent implements OnInit {
     {name: 'Safari', tag: 'safari'},
   ];
 
-  fixtures = [
-    {name: 'test1', path: './fixtures/test1.ts'},
-    {name: 'test2', path: './fixtures/test2.ts'},
-    {name: 'test3', path: './fixtures/test3.ts'}
-  ];
+  // fixtures = [
+  //   {name: 'test1', path: './fixtures/test1.ts'},
+  //   {name: 'test2', path: './fixtures/test2.ts'},
+  //   {name: 'test3', path: './fixtures/test3.ts'}
+  // ];
 
   fixList: string[];
 

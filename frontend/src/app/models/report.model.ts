@@ -47,3 +47,12 @@ export interface IReport {
   fixtures: IFixture[];
   warnings: string[];
 }
+
+export interface IReportSummary {
+  id: string;
+  startTime: string;
+  passed: number;
+  total: number;
+  skipped: number;
+  failed: number;
+}
