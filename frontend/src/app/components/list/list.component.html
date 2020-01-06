@@ -6,29 +6,29 @@
     <mat-divider></mat-divider>
     <br>
     <div>
-      <mat-table [dataSource]="reports">
+      <mat-table [dataSource]="reports" matSort>
         <!-- <ng-container matColumnDef="ID">
             <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
             <mat-cell *matCellDef="let report"> {{ report._id }}</mat-cell>
         </ng-container> -->
         <ng-container matColumnDef="startTime">
-          <mat-header-cell *matHeaderCellDef> Start Time </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
           <mat-cell *matCellDef="let report"> {{ dateManipulator(report.startTime) }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="passed">
-            <mat-header-cell *matHeaderCellDef> Passed </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Passed </mat-header-cell>
             <mat-cell *matCellDef="let report"> {{ report.passed }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="skipped">
-            <mat-header-cell *matHeaderCellDef> Skipped </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Skipped </mat-header-cell>
             <mat-cell *matCellDef="let report"> {{ report.skipped }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="failed">
-          <mat-header-cell *matHeaderCellDef> Failed </mat-header-cell>
-          <mat-cell *matCellDef="let report"> {{ report.total - (report.passed + report.skipped) }}</mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Failed </mat-header-cell>
+          <mat-cell *matCellDef="let report"> {{ report.failed }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="total">
-            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
             <mat-cell *matCellDef="let report"> {{ report.total }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">

@@ -1,10 +1,10 @@
 {
-  "startTime": "2020-01-03T15:20:43.028Z",
-  "endTime": "2020-01-03T15:20:44.380Z",
+  "startTime": "2020-01-06T15:22:20.062Z",
+  "endTime": "2020-01-06T15:22:20.321Z",
   "userAgents": [
     "Chrome 79.0.3945.88 / macOS 10.15.2"
   ],
-  "passed": 1,
+  "passed": 0,
   "total": 1,
   "skipped": 0,
   "fixtures": [
@@ -16,8 +16,10 @@
         {
           "name": "Navigate to A/B Testing page",
           "meta": {},
-          "errs": [],
-          "durationMs": 1340,
+          "errs": [
+            "A request to \"http://the-internet.herokuapp.com/\" has failed. \nUse quarantine mode to perform additional attempts to execute this test. \nYou can find troubleshooting information for this issue at \"https://go.devexpress.com/TestCafe_FAQ_ARequestHasFailed.aspx\".\n\nError details:\nFailed to find a DNS-record for the resource at \"http://the-internet.herokuapp.com/\".\n\nBrowser: Chrome 79.0.3945.88 / macOS 10.15.2\n\n   11 |    async goToBasicAuth() {\n   12 |        await t.click(this.basicAuthBtn);\n   13 |    }\n   14 |\n   15 |    async goToABTesting() {\n > 16 |        await t.click(this.abTestingBtn);\n   17 |    }\n   18 |}\n\n   at LandingPage.<anonymous> (/Users/ben/Development/meanCafe/backend/testing/page-objects/landing.po.ts:16:17)\n   at <anonymous> (/Users/ben/Development/meanCafe/backend/testing/page-objects/landing.po.ts:8:71)\n   at __awaiter (/Users/ben/Development/meanCafe/backend/testing/page-objects/landing.po.ts:4:12)\n   at LandingPage.goToABTesting (/Users/ben/Development/meanCafe/backend/testing/page-objects/landing.po.ts:24:16)\n   at <anonymous> (/Users/ben/Development/meanCafe/backend/testing/fixtures/landing-page.fixture.ts:12:27)\n   at <anonymous> (/Users/ben/Development/meanCafe/backend/testing/fixtures/landing-page.fixture.ts:8:71)\n   at __awaiter (/Users/ben/Development/meanCafe/backend/testing/fixtures/landing-page.fixture.ts:4:12)\n   at <anonymous> (/Users/ben/Development/meanCafe/backend/testing/fixtures/landing-page.fixture.ts:11:52)\n   at <anonymous> (/Users/ben/Development/meanCafe/backend/node_modules/testcafe/src/api/wrap-test-function.js:17:28)\n   at TestRun._executeTestFn (/Users/ben/Development/meanCafe/backend/node_modules/testcafe/src/test-run/index.js:291:19)"
+          ],
+          "durationMs": 241,
           "screenshotPath": null,
           "skipped": false
         }

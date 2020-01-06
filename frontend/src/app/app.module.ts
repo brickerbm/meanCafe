@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule,
         MatFormFieldModule,
+        MatExpansionModule,
         MatInputModule,
         MatOptionModule,
         MatSelectModule,
@@ -20,8 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
 import { ReportComponent } from './components/report/report.component';
 import { ConfigComponent } from './components/config/config.component';
-import { ReportService } from './report.service';
-import { ConfigService } from './config.service';
+import { ReportService } from './services/report.service';
+import { ConfigService } from './services/config.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -47,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   providers: [
     ReportService,

@@ -43,7 +43,7 @@ export interface IReport {
   passed: number;
   total: number;
   skipped: number;
-  // failed: number;
+  failed: number;
   fixtures: IFixture[];
   warnings: string[];
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IConfig } from './models/config.model';
+import { IConfig } from '../models/config.model';
 import { BehaviorSubject, Subject, Observable, merge } from 'rxjs';
 import { withLatestFrom, concatMap, map } from 'rxjs/operators';
 
