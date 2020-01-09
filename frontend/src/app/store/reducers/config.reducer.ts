@@ -49,3 +49,7 @@ export const configReducer = createReducer(
     return { ...state, sendConfigError: error };
   }),
 );
+
+export function reducer(state: AppState | undefined, action: Action): AppState {
+  return configReducer(state, action);
+}

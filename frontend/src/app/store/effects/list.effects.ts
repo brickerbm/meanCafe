@@ -13,19 +13,33 @@ export class ListEffects {
 
   GetReports$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
-      ofType(ListActions.beginGetReports),
+      ofType(ListActions.beginGetReports, ListActions.successDeleteReport),
       mergeMap(action =>
         this.hs.getReports().pipe(
-          map((data: Report[]) => {
-            return ListActions.successGetReports({ payload: data });
-          }),
-          catchError((error: Error) => {
-            return of(ListActions.errorGettingReports(error));
-          })
+          map((data: Report[]) =>
+            ListActions.successGetReports({ payload: data })
+          ),
+          catchError((error: Error) =>
+            of(ListActions.errorGettingReports(error))
+          )
         )
       )
     )
   );
 
-  // DeleteReport$: Observable<Action> = createEffect(() => );
+  DeleteReport$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(ListActions.beginDeleteReport),
+      mergeMap(action =>
+        this.hs.deleteReport(action.payload).pipe(
+          map((data: string) =>
+            ListActions.successDeleteReport({ payload: data })
+          ),
+          catchError((error: Error) =>
+            of(ListActions.errorDeletingReport(error))
+          )
+        )
+      )
+    )
+  );
 }

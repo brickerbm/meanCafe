@@ -99,17 +99,17 @@ export const removeFixture = createAction(
 // Send Data Actions
 export const submitConfig = createAction(
   EConfigActions.SubmitConfig,
-  props<{ payload: { browsers: string[], src: string[] } }>()
+  props<{ payload: { browsers: string[], src: string[], headless: boolean } }>()
 );
 
 export const beginSubmitConfig = createAction(
   EConfigActions.BeginSubmitConfig,
-  props<{ payload: { browsers: string[], src: string[] } }>()
+  props<{ payload: { browsers: string[], src: string[], headless: boolean } }>()
 );
 
 export const successSubmitConfig = createAction(
   EConfigActions.SuccessSubmitConfig,
-  props<{ payload: { browsers: string[], src: string[] } }>()
+  props<{ payload: string }>()
 );
 
 export const errorSubmitConfig = createAction(

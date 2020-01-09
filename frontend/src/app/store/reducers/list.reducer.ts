@@ -19,7 +19,7 @@ const listReducer = createReducer(
   }),
   // Delete report
   on(ListActions.deleteReport, state => state),
-  on(ListActions.successDeleteReport, (state, { payload }) => {
+  on(ListActions.successDeleteReport, (state, { payload }) => { // Return new list in response payload
     return { ...state, reportDeletionError: null };
   }),
   on(ListActions.errorDeletingReport, (state, error: Error) => {
