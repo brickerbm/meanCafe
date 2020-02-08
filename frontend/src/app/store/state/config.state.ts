@@ -1,27 +1,23 @@
 import { IConfig } from '../../models/config.model';
 
-export interface IConfigState {
-  config: IConfig;
+export interface ConfigState {
+  browsers: string[];
+  src: string[];
+  fixtureList: string[];
+  getFixturesError: Error;
+  headless: boolean;
   allBrowsers: boolean;
-  runHeadless: boolean;
   allFixtures: boolean;
-  skipErrors: boolean;
+  sendConfigError: Error;
 }
 
-export const initialConfigState: IConfigState = {
-  config: {
-    browsers: ['all:headless'],
-    src: ['./testing/fixtures'],
-    reporter:
-        {
-            name: 'JSON',
-            output: './testing/report.json'
-        },
-    color: true,
-    skipJsErrors: true
-  },
+export const initialConfigState: ConfigState = {
+  browsers: ['chrome:headless'],
+  src: ['./automated_testing/fixtures'],
+  fixtureList: [],
+  getFixturesError: null,
+  headless: true,
   allBrowsers: true,
-  runHeadless: true,
   allFixtures: true,
-  skipErrors: true
+  sendConfigError: null,
 };

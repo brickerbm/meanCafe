@@ -12,11 +12,11 @@ export class ConfigEffects {
 
   GetFixtures$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConfigActions.beginGetFixtures),
+      ofType(ConfigActions.getFixtures),
       mergeMap(action =>
         this.hs.getFixtures().pipe(
           map((data: string[]) =>
-            ConfigActions.successGetFixtures({ payload: data })
+            ConfigActions.successGetFixtures({ fixtures: data })
           ),
           catchError((error: Error) =>
             of(ConfigActions.errorGettingFixtures(error))
@@ -28,9 +28,9 @@ export class ConfigEffects {
 
   SubmitConfig$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConfigActions.beginSubmitConfig),
+      ofType(ConfigActions.submitConfig),
       mergeMap(action =>
-        this.hs.sendConfigData(action.payload).pipe(
+        this.hs.sendConfigData(action.config).pipe(
           map((data: string) =>
             ConfigActions.successSubmitConfig({ payload: data })
           ),

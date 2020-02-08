@@ -22,7 +22,7 @@ export class HttpService {
     return this.http.post<string>(`${this.ApiURL}/config/write`, data);
   }
 
-  deleteReport(id): Observable<string> {
-    return this.http.get<string>(`${this.ApiURL}/reports/delete/${id}`);
+  deleteReport(report: Report): Observable<Report> {
+    return this.http.get<Report>(`${this.ApiURL}/reports/delete/${report.id}`);
   }
 }

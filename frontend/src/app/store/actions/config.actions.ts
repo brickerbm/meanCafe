@@ -1,118 +1,83 @@
-import { Action, createAction, props } from '@ngrx/store';
-
-export enum EConfigActions {
-  // Fixture Retrieval
-  GetFixtures = '[Config] Get Fixtures',
-  BeginGetFixtures = '[Config] Begin Get Fixtures',
-  SuccessGetFixtures = '[Config] Success Get Fixtures',
-  ErrorGettingFixtures = '[Config] Error Getting Fixtures',
-  // Browsers
-  UseAllBrowsers = '[Config] Use All Browsers',
-  ClearAllBrowsers = '[Config] Clear All Browsers',
-  AddBrowser = '[Config] Add Browser',
-  RemoveBrowser = '[Config] Remove Browser',
-  // Boolean Flags
-  ToggleHeadless = '[Config] Toggle Headless',
-  ToggleAllBrowsers = '[Config] Toggle All Browsers',
-  ToggleAllFixtures = '[Config] Toggle All Fixtures',
-  // Fixtures
-  UseAllFixtures = '[Config] Use All Fixtures',
-  ClearAllFixtures = '[Config] Clear All Fixtures',
-  AddFixture = '[Config] Add Fixture',
-  RemoveFixture = '[Config] Remove Fixture',
-  // Send config data
-  SubmitConfig = '[Config] Submit Config',
-  BeginSubmitConfig = '[Config] Begin Submit Config',
-  SuccessSubmitConfig = '[Config] Success Submit Config',
-  ErrorSubmtConfig = '[Config] Error Submitting Config',
-}
+import { createAction, props } from '@ngrx/store';
 
 // Fixture Retrieval Actions
 export const getFixtures = createAction(
-  EConfigActions.GetFixtures,
-);
-
-export const beginGetFixtures = createAction(
-  EConfigActions.BeginGetFixtures,
+  '[Config] Get Fixtures',
 );
 
 export const successGetFixtures = createAction(
-  EConfigActions.SuccessGetFixtures,
-  props<{ payload: string[] }>()
+  '[Config] Success Get Fixtures',
+  props<{ fixtures: string[] }>()
 );
 
 export const errorGettingFixtures = createAction(
-  EConfigActions.ErrorGettingFixtures,
+  '[Config] Error Getting Fixtures',
   props<Error>()
 );
+
 // Browser Actions
 export const useAllBrowsers = createAction(
-  EConfigActions.UseAllBrowsers,
+  '[Config] Use All Browsers',
 );
 
 export const clearAllBrowsers = createAction(
-  EConfigActions.ClearAllBrowsers,
+  '[Config] Clear All Browsers',
 );
 
 export const addBrowser = createAction(
-  EConfigActions.AddBrowser,
-  props<{ payload: string }>()
+  '[Config] Add Browser',
+  props<{ browser: string }>()
 );
 
 export const removeBrowser = createAction(
-  EConfigActions.RemoveBrowser,
-  props<{ payload: string }>()
+  '[Config] Remove Browser',
+  props<{ browser: string }>()
 );
 
 // Boolean Flag Actions
 export const toggleHeadless = createAction(
-  EConfigActions.ToggleHeadless,
+  '[Config] Toggle Headless',
 );
 
 export const toggleAllBrowsers = createAction(
-  EConfigActions.ToggleAllBrowsers,
+  '[Config] Toggle All Browsers',
 );
 
 export const toggleAllFixtures = createAction(
-  EConfigActions.ToggleAllFixtures,
+  '[Config] Toggle All Fixtures',
 );
 
 // Fixture Actions
 export const useAllFixtures = createAction(
-  EConfigActions.UseAllFixtures,
+  '[Config] Use All Fixtures',
 );
 
 export const clearAllFixtures = createAction(
-  EConfigActions.ClearAllFixtures,
+  '[Config] Clear All Fixtures',
 );
 
 export const addFixture = createAction(
-  EConfigActions.AddFixture,
-  props<{ payload: string }>()
+  '[Config] Add Fixture',
+  props<{ fixture: string }>()
 );
 
 export const removeFixture = createAction(
-  EConfigActions.RemoveFixture,
-  props<{ payload: string }>()
+  '[Config] Remove Fixture',
+  props<{ fixture: string }>()
 );
 
 // Send Data Actions
 export const submitConfig = createAction(
-  EConfigActions.SubmitConfig,
-  props<{ payload: { browsers: string[], src: string[], headless: boolean } }>()
-);
-
-export const beginSubmitConfig = createAction(
-  EConfigActions.BeginSubmitConfig,
-  props<{ payload: { browsers: string[], src: string[], headless: boolean } }>()
+  '[Config] Submit Config',
+  props<{ config: { browsers: string[], src: string[], headless: boolean } }>()
 );
 
 export const successSubmitConfig = createAction(
-  EConfigActions.SuccessSubmitConfig,
+  '[Config] Success Submit Config',
   props<{ payload: string }>()
 );
 
 export const errorSubmitConfig = createAction(
-  EConfigActions.ErrorSubmtConfig,
+  '[Config] Error Submitting Config',
   props<Error>()
 );

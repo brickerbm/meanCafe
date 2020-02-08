@@ -1,3 +1,6 @@
+<ng-container *ngIf="componentState$ | async as componentState">
+
+
 <div>
   <br>
   <mat-card>
@@ -6,7 +9,7 @@
     <mat-divider></mat-divider>
     <br>
     <div>
-      <mat-table [dataSource]="reports" matSort>
+      <mat-table [dataSource]="componentState.reports" matSort>
         <!-- <ng-container matColumnDef="ID">
             <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
             <mat-cell *matCellDef="let report"> {{ report._id }}</mat-cell>
@@ -25,7 +28,7 @@
         </ng-container>
         <ng-container matColumnDef="failed">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Failed </mat-header-cell>
-          <mat-cell *matCellDef="let report"> {{ report.failed }}</mat-cell>
+          <mat-cell *matCellDef="let report"> {{ report.total - (report.skipped + report.passed) }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="total">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
@@ -36,8 +39,9 @@
             <mat-cell *matCellDef="let report" class="mat-column-right">
               <!-- <button mat-button color="accent">View Config</button> -->
               <!-- <button mat-button color="accent">Run Again</button> -->
-              <button mat-button color="primary" (click)="viewReport(report._id)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button>
-              <button mat-button color="warn" (click)="deleteReport(report._id)"><mat-icon>delete</mat-icon></button>
+              <button mat-button color="primary" (click)="viewReport(report)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button>
+              <!-- <button mat-button color="primary" (click)="setSelectedReport(report)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button> -->
+              <button mat-button color="warn" (click)="deleteReport(report)"><mat-icon>delete</mat-icon></button>
             </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -46,3 +50,7 @@
     </div>
   </mat-card>
 </div>
+</ng-container>
+<!-- <div *ngFor="let report of reports$ | async">
+  {{ report | json }}
+</div> -->

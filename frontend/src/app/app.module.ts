@@ -14,7 +14,10 @@ import { MatToolbarModule,
         MatDividerModule,
         MatSnackBarModule,
         MatSlideToggleModule} from '@angular/material';
-
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,7 +26,11 @@ import { ReportComponent } from './components/report/report.component';
 import { ConfigComponent } from './components/config/config.component';
 import { ReportService } from './services/report.service';
 import { ConfigService } from './services/config.service';
-import { HttpClientModule } from '@angular/common/http';
+import * as fromList from './store/reducers/list.reducer';
+import * as fromConfig from './store/reducers/config.reducer';
+import { ConfigEffects } from './store/effects/config.effects';
+import { ListEffects } from './store/effects/list.effects';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -49,7 +56,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    StoreModule.forRoot({ list: fromList.reducer, config: fromConfig.reducer }),
+    EffectsModule.forRoot([ConfigEffects, ListEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    })
   ],
   providers: [
     ReportService,

@@ -1,8 +1,8 @@
 {
-  "startTime": "2020-01-07T15:14:14.076Z",
-  "endTime": "2020-01-07T15:14:15.280Z",
+  "startTime": "2020-02-04T20:08:52.302Z",
+  "endTime": "2020-02-04T20:08:53.496Z",
   "userAgents": [
-    "Chrome 79.0.3945.88 / macOS 10.15.2"
+    "Chrome 79.0.3945.130 / macOS 10.15.3"
   ],
   "passed": 1,
   "total": 1,
@@ -17,7 +17,7 @@
           "name": "Navigate to A/B Testing page",
           "meta": {},
           "errs": [],
-          "durationMs": 1197,
+          "durationMs": 1185,
           "screenshotPath": null,
           "skipped": false
         }

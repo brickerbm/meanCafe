@@ -1,33 +1,34 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ListActions from '../actions/list.actions';
-import { initialAppState, AppState } from '../state/app.state';
+import { initialListState, ListState } from '../state/list.state';
+
 
 const listReducer = createReducer(
-  initialAppState,
+  initialListState,
   // Get list of reports
   on(ListActions.getReports, state => state),
-  on(ListActions.successGetReports, (state, { payload }) => {
-    return { ...state, reports: payload, reportsError: null };
+  on(ListActions.successGetReports, (state, { reports }) => {
+    return { ...state, reportList: reports, reportsError: null };
   }),
   on(ListActions.errorGettingReports, (state, error: Error) => {
     console.error(error);
-    return { ...state, reportsError: error };
+    return { ...state, getError: error };
   }),
   // Set selected report
-  on(ListActions.setSelectedReport, (state, { payload }) => {
-    return { ...state, selectedReport: payload };
+  on(ListActions.setSelectedReport, (state, { report }) => {
+    return { ...state, targetReport: report };
   }),
   // Delete report
   on(ListActions.deleteReport, state => state),
-  on(ListActions.successDeleteReport, (state, { payload }) => { // Return new list in response payload
-    return { ...state, reportDeletionError: null };
+  on(ListActions.successDeleteReport, (state, { report }) => { // Return new list in response payload
+    return { ...state, deleteError: null };
   }),
   on(ListActions.errorDeletingReport, (state, error: Error) => {
     console.error(error);
-    return { ...state, reportDeletionError: error };
+    return { ...state, deleteError: error };
   }),
 );
 
-export function reducer(state: AppState | undefined, action: Action): AppState {
+export function reducer(state: ListState | undefined, action: Action) {
   return listReducer(state, action);
 }
