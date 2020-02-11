@@ -8,6 +8,7 @@ import { Report } from '../models/ngrxReport.model';
 })
 export class HttpService {
   private ApiURL = 'http://localhost:4000';
+  private mockUrl = 'api/reports';
   constructor(private http: HttpClient) { }
 
   getFixtures(): Observable<string[]> {
@@ -15,7 +16,8 @@ export class HttpService {
   }
 
   getReports(): Observable<Report[]> {
-    return this.http.get<Report[]>(`${this.ApiURL}/reports`);
+    // return this.http.get<Report[]>(`${this.ApiURL}/reports`);
+    return this.http.get<Report[]>(this.mockUrl);
   }
 
   sendConfigData(data: { browsers: string[], src: string[], headless: boolean }): Observable<string> {

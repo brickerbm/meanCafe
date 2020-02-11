@@ -15,6 +15,8 @@ import { MatToolbarModule,
         MatSnackBarModule,
         MatSlideToggleModule} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './services/in-memory-data.service';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -31,6 +33,7 @@ import * as fromConfig from './store/reducers/config.reducer';
 import { ConfigEffects } from './store/effects/config.effects';
 import { ListEffects } from './store/effects/list.effects';
 import { environment } from 'src/environments/environment';
+import { reducers, effects } from './store';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    ),
     MatToolbarModule,
     MatInputModule,
     MatOptionModule,
@@ -58,7 +64,7 @@ import { environment } from 'src/environments/environment';
     MatSlideToggleModule,
     MatExpansionModule,
     StoreModule.forRoot({ list: fromList.reducer, config: fromConfig.reducer }),
-    EffectsModule.forRoot([ConfigEffects, ListEffects]),
+    EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

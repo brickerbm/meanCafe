@@ -7,7 +7,7 @@ import { ReportService } from '../../services/report.service';
 import { Router } from '@angular/router';
 import { TransferService } from 'src/app/services/transfer.service';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/store/state/app.state';
+import { AppState } from 'src/app/store/state';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { Report } from 'src/app/models/ngrxReport.model';
 import * as ListActions from '../../store/actions/list.actions';
@@ -29,8 +29,8 @@ export class ListComponent implements OnInit {
   reportID: string;
   dataSource;
 
-  reports$ = this.store.pipe(select(state => ListSelectors.selectReports(state)));
-  reportsError$ = this.store.pipe(select(state => ListSelectors.selectReportsError(state)));
+  reports$ = this.store.pipe(select(ListSelectors.selectReportsList));
+  reportsError$ = this.store.pipe(select(ListSelectors.selectGetError));
   componentState$ = combineLatest([this.reports$, this.reportsError$]).pipe(
     map(([reports, errors]) => ({ reports, errors })),
     tap(cs => {
@@ -38,8 +38,7 @@ export class ListComponent implements OnInit {
     })
   );
   constructor(private rs: ReportService, private ts: TransferService, private router: Router, private store: Store<AppState>) {
-    this.store.dispatch(ListActions.beginGetReports());
-
+    this.store.dispatch(ListActions.getReports());
   }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -56,9 +55,9 @@ export class ListComponent implements OnInit {
     // }
   }
 
-  setSelectedReport(report: { payload: Report }) {
-    this.store.dispatch(ListActions.setSelectedReport(report));
-    console.log(this.store.select(state => ListSelectors.selectSelectedReport(state)));
+  setSelectedReport(report: Report ) {
+    this.store.dispatch(ListActions.setSelectedReport({ report: report }));
+    console.log(this.store.select(ListSelectors.selectTargetReport));
   }
 
   viewReport(id) {
@@ -66,7 +65,7 @@ export class ListComponent implements OnInit {
   }
 
   deleteReport(report: Report) {
-    this.store.dispatch(ListActions.beginDeleteReport(report));
+    this.store.dispatch(ListActions.deleteReport({ report: report }));
     // this.rs.deleteReport(report.id).subscribe(() => {
       // this.fetchReports();
     // });
