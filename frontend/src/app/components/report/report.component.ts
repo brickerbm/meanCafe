@@ -6,6 +6,7 @@ import { Report } from 'src/app/models/ngrxReport.model';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import * as ListSelectors from '../../store/selectors/list.selectors';
+import * as fromStore from '../../store';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,37 +15,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
-  reportID: string;
-  report: IReport;
+  targetReport$: Observable<Report> = this.store.pipe(
+    select(fromStore.selectTargetReport)
+  );
 
-  report$: Observable<Report>;
+  constructor(private store: Store<AppState>) {}
 
-  constructor(
-    private ts: TransferService,
-    private rs: ReportService,
-    private store: Store<AppState>
-    ) { }
-
-  ngOnInit() {
-    this.ts.currentVal.subscribe(currentID => this.reportID = currentID);
-    this.fetchReport(this.reportID);
-    this.report$ = this.store.pipe(select(ListSelectors.selectTargetReport));
-  }
-
-  fetchReport(id: string) {
-    this.rs
-    .getReportById(id)
-    .subscribe((data: IReport) => {
-      this.report = data;
-      console.log('Data Requested');
-      this.report.failed = this.rs.getTotalFailed(this.report);
-      for (const item of this.report.fixtures) {
-        item.passed = this.rs.getNumPassed(item);
-        item.failed = this.rs.getNumFailed(item);
-        item.skipped = this.rs.getNumSkipped(item);
-        item.total = item.tests.length;
-      }
-      console.log(this.report);
-    });
-  }
+  ngOnInit() {}
 }

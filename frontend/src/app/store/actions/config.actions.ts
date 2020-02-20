@@ -1,83 +1,84 @@
 import { createAction, props } from '@ngrx/store';
+import { Config } from '../../models';
 
 // Fixture Retrieval Actions
-export const getFixtures = createAction(
+export const GetFixtures = createAction(
   '[Config] Get Fixtures',
 );
 
-export const successGetFixtures = createAction(
-  '[Config] Success Get Fixtures',
-  props<{ fixtures: string[] }>()
+export const GetFixturesSuccess = createAction(
+  '[Config] Get Fixtures Success',
+  props<{ fixturesList: string[] }>()
 );
 
-export const errorGettingFixtures = createAction(
-  '[Config] Error Getting Fixtures',
+export const GetFixturesFail = createAction(
+  '[Config] Get Fixtures Fail',
   props<Error>()
 );
 
 // Browser Actions
-export const useAllBrowsers = createAction(
+export const UseAllBrowsers = createAction(
   '[Config] Use All Browsers',
 );
 
-export const clearAllBrowsers = createAction(
+export const ClearAllBrowsers = createAction(
   '[Config] Clear All Browsers',
 );
 
-export const addBrowser = createAction(
+export const AddBrowser = createAction(
   '[Config] Add Browser',
   props<{ browser: string }>()
 );
 
-export const removeBrowser = createAction(
+export const RemoveBrowser = createAction(
   '[Config] Remove Browser',
   props<{ browser: string }>()
 );
 
 // Boolean Flag Actions
-export const toggleHeadless = createAction(
+export const ToggleHeadless = createAction(
   '[Config] Toggle Headless',
 );
 
-export const toggleAllBrowsers = createAction(
+export const ToggleAllBrowsers = createAction(
   '[Config] Toggle All Browsers',
 );
 
-export const toggleAllFixtures = createAction(
+export const ToggleAllFixtures = createAction(
   '[Config] Toggle All Fixtures',
 );
 
 // Fixture Actions
-export const useAllFixtures = createAction(
+export const UseAllFixtures = createAction(
   '[Config] Use All Fixtures',
 );
 
-export const clearAllFixtures = createAction(
+export const ClearAllFixtures = createAction(
   '[Config] Clear All Fixtures',
 );
 
-export const addFixture = createAction(
+export const AddFixture = createAction(
   '[Config] Add Fixture',
   props<{ fixture: string }>()
 );
 
-export const removeFixture = createAction(
+export const RemoveFixture = createAction(
   '[Config] Remove Fixture',
   props<{ fixture: string }>()
 );
 
 // Send Data Actions
-export const submitConfig = createAction(
-  '[Config] Submit Config',
-  props<{ config: { browsers: string[], src: string[], headless: boolean } }>()
+export const SendConfig = createAction(
+  '[Config] Send Config',
+  props<{ config: Config }>()
 );
 
-export const successSubmitConfig = createAction(
-  '[Config] Success Submit Config',
+export const SendConfigSuccess = createAction(
+  '[Config] Send Config Success',
   props<{ payload: string }>()
 );
 
-export const errorSubmitConfig = createAction(
-  '[Config] Error Submitting Config',
+export const SendConfigFail = createAction(
+  '[Config] Send Config Fail',
   props<Error>()
 );

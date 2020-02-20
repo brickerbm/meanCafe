@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mean": "(cd ../backend && npm run dev) & npm run start"
+    "mean": "(cd ../backend && npm run dev) & npm run start",
+    "docker-start": "ng serve --host 0.0.0.0"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +37,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.900.1",
+    "@angular-devkit/build-angular": "^0.803.23",
     "@angular/cli": "~8.1.2",
     "@angular/compiler-cli": "~8.1.2",
     "@angular/language-service": "~8.1.2",

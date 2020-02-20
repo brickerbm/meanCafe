@@ -1,8 +1,8 @@
-import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
+import { ActionReducerMap } from '@ngrx/store';
 
 import * as fromList from './list.reducer';
 import * as fromConfig from './config.reducer';
-import { AppState } from '../state/index';
+import { AppState } from '../state';
 
 export const reducers: ActionReducerMap<AppState> = {
   list: fromList.reducer,

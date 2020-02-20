@@ -9,3 +9,9 @@ export interface IConfig {
   color: boolean;
   skipJsErrors: boolean;
 }
+
+export interface Config {
+  browsers: string[];
+  src: string[];
+  headless: boolean;
+}

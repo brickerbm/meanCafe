@@ -36,7 +36,7 @@ export interface Fixture {
 }
 
 export interface Report {
-  id: number;
+  id?: number;
   startTime: string;
   endTime: string;
   userAgents: string[];

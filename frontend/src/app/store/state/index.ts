@@ -6,4 +6,5 @@ export interface AppState {
   config: fromConfig.ConfigState;
 }
 
-
+export * from './config.state';
+export * from './list.state';

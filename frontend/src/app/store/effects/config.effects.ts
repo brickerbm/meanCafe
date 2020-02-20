@@ -10,35 +10,23 @@ import { HttpService } from '../../services/http.service';
 export class ConfigEffects {
   constructor(private hs: HttpService, private actions$: Actions) {}
 
-  GetFixtures$: Observable<Action> = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ConfigActions.getFixtures),
-      mergeMap(action =>
-        this.hs.getFixtures().pipe(
-          map((data: string[]) =>
-            ConfigActions.successGetFixtures({ fixtures: data })
-          ),
-          catchError((error: Error) =>
-            of(ConfigActions.errorGettingFixtures(error))
-          )
-        )
-      )
+  GetFixtures$: Observable<Action> = createEffect(() => this.actions$.pipe(
+      ofType(ConfigActions.GetFixtures),
+      mergeMap(() => this.hs.getFixtures().pipe(
+        map((fixtures: string[]) => ConfigActions.GetFixturesSuccess({ fixturesList: fixtures })),
+        catchError((error: Error) => of(ConfigActions.GetFixturesFail(error)))
+      ))
     )
   );
 
   SubmitConfig$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(ConfigActions.submitConfig),
+      ofType(ConfigActions.SendConfig),
       mergeMap(action =>
         this.hs.sendConfigData(action.config).pipe(
-          map((data: string) =>
-            ConfigActions.successSubmitConfig({ payload: data })
-          ),
-          catchError((error: Error) =>
-            of(ConfigActions.errorSubmitConfig(error))
-          )
-        )
-      )
+          map((data: string) => ConfigActions.SendConfigSuccess({ payload: data })),
+          catchError((error: Error) => of(ConfigActions.SendConfigFail(error)))
+      ))
     )
   );
 }

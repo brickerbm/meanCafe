@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ListActions from '../actions/list.actions';
 import { HttpService } from '../../services/http.service';
-import { Report } from '../../models/ngrxReport.model';
+import { Report } from '../../models';
 
 @Injectable()
 export class ListEffects {
@@ -16,11 +16,11 @@ export class ListEffects {
 
   GetReports$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
-      ofType(ListActions.getReports, ListActions.successDeleteReport),
-      mergeMap(action =>
+      ofType(ListActions.GetReports, ListActions.DeleteReportSuccess),
+      mergeMap(() =>
         this.hs.getReports().pipe(
-          map((data: Report[]) => ListActions.successGetReports({ reports: data })),
-          catchError((error: Error) => of(ListActions.errorGettingReports(error)))
+          map((reports: Report[]) => ListActions.GetReportsSuccess({ reportsList: reports })),
+          catchError((error: Error) => of(ListActions.GetReportsFail(error)))
         )
       )
     )
@@ -28,11 +28,11 @@ export class ListEffects {
 
   DeleteReport$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
-      ofType(ListActions.deleteReport),
+      ofType(ListActions.DeleteReport),
       mergeMap(action =>
         this.hs.deleteReport(action.report).pipe(
-          map((data: Report) => ListActions.successDeleteReport({ report: data })),
-          catchError((error: Error) => of(ListActions.errorDeletingReport(error)))
+          map((res: Report) => ListActions.DeleteReportSuccess({ report: res })),
+          catchError((error: Error) => of(ListActions.DeleteReportFail(error)))
         )
       )
     )

@@ -1,56 +1,48 @@
-<ng-container *ngIf="componentState$ | async as componentState">
-
-
-<div>
-  <br>
-  <mat-card>
-    <button mat-raised-button color="primary" routerLink="/config">Create New Test Configuration</button>
-    <br><br>
-    <mat-divider></mat-divider>
+<ng-container *ngIf="list$ | async as list">
+  <div>
     <br>
-    <div>
-      <mat-table [dataSource]="componentState.reports" matSort>
-        <!-- <ng-container matColumnDef="ID">
-            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-            <mat-cell *matCellDef="let report"> {{ report._id }}</mat-cell>
-        </ng-container> -->
-        <ng-container matColumnDef="startTime">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
-          <mat-cell *matCellDef="let report"> {{ dateManipulator(report.startTime) }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="passed">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Passed </mat-header-cell>
-            <mat-cell *matCellDef="let report"> {{ report.passed }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="skipped">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Skipped </mat-header-cell>
-            <mat-cell *matCellDef="let report"> {{ report.skipped }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="failed">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Failed </mat-header-cell>
-          <mat-cell *matCellDef="let report"> {{ report.total - (report.skipped + report.passed) }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="total">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
-            <mat-cell *matCellDef="let report"> {{ report.total }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </mat-header-cell>
-            <mat-cell *matCellDef="let report" class="mat-column-right">
-              <!-- <button mat-button color="accent">View Config</button> -->
-              <!-- <button mat-button color="accent">Run Again</button> -->
-              <button mat-button color="primary" (click)="viewReport(report)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button>
-              <!-- <button mat-button color="primary" (click)="setSelectedReport(report)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button> -->
-              <button mat-button color="warn" (click)="deleteReport(report)"><mat-icon>delete</mat-icon></button>
-            </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
-  </mat-card>
-</div>
+    <mat-card>
+      <button mat-raised-button color="primary" routerLink="/config">Create New Test Configuration</button>
+      <br><br>
+      <mat-divider></mat-divider>
+      <br>
+      <div>
+        <mat-table [dataSource]="list.reports" matSort>
+          <!-- <ng-container matColumnDef="ID">
+              <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+              <mat-cell *matCellDef="let report"> {{ report._id }}</mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="startTime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report.startTime | date: 'dd MMM HHmm' }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="passed">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Passed </mat-header-cell>
+              <mat-cell *matCellDef="let report"> {{ report.passed }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="skipped">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Skipped </mat-header-cell>
+              <mat-cell *matCellDef="let report"> {{ report.skipped }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="failed">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Failed </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{ report.total - (report.skipped + report.passed) }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="total">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+              <mat-cell *matCellDef="let report"> {{ report.total }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef class="mat-column-right"> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let report" class="mat-column-right">
+                <button mat-button color="primary" (click)="selectReport(report)" routerLink="/report"><mat-icon>open_in_new</mat-icon></button>
+                <button mat-button color="warn" (click)="deleteReport(report)"><mat-icon>delete</mat-icon></button>
+              </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </mat-card>
+  </div>
 </ng-container>
-<!-- <div *ngFor="let report of reports$ | async">
-  {{ report | json }}
-</div> -->

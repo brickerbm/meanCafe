@@ -1,52 +1,52 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ConfigActions from '../actions/config.actions';
-import { initialConfigState, ConfigState } from '../state/config.state';
+import { initialConfigState, ConfigState } from '../state';
 
 export const configReducer = createReducer(
   initialConfigState,
   // Fixture Retrieval
-  on(ConfigActions.getFixtures, state => state),
-  on(ConfigActions.successGetFixtures, (state, { fixtures }) => {
-    return { ...state, fixtureList: fixtures, fixturesError: null };
+  on(ConfigActions.GetFixtures, state => state),
+  on(ConfigActions.GetFixturesSuccess, (state, { fixturesList }) => {
+    return { ...state, fixtures: fixturesList, fError: null };
   }),
-  on(ConfigActions.errorGettingFixtures, (state, error: Error) => {
+  on(ConfigActions.GetFixturesFail, (state, error: Error) => {
     console.error(error);
-    return { ...state, fixturesError: error };
+    return { ...state, fError: error };
   }),
   // Browser Actions
-  on(ConfigActions.useAllBrowsers, state => ({ ...state, browsers: ['all'] })),
-  on(ConfigActions.clearAllBrowsers, state => ({ ...state, browsers: [] })),
-  on(ConfigActions.addBrowser, (state, { browser }) => ({
+  on(ConfigActions.UseAllBrowsers, state => ({ ...state, browsers: ['all'] })),
+  on(ConfigActions.ClearAllBrowsers, state => ({ ...state, browsers: [] })),
+  on(ConfigActions.AddBrowser, (state, { browser }) => ({
     ...state,
     browsers: [...state.browsers, browser]
   })),
-  on(ConfigActions.removeBrowser, (state, { browser }) => ({
+  on(ConfigActions.RemoveBrowser, (state, { browser }) => ({
     ...state,
-    browsers: state.browsers.splice(state.browsers.indexOf(browser), 1)
+    browsers: state.browsers.filter(val => val !== browser)
   })),
   // Boolean Flag Actions
-  on(ConfigActions.toggleAllBrowsers, state => ({ ...state, allBrowsers: !state.allBrowsers })),
-  on(ConfigActions.toggleAllFixtures, state => ({ ...state, allFixtures: !state.allFixtures })),
-  on(ConfigActions.toggleHeadless, state => ({ ...state, headless: !state.headless })),
+  on(ConfigActions.ToggleAllBrowsers, state => ({ ...state, allBrowsersFlag: !state.allBrowsersFlag })),
+  on(ConfigActions.ToggleAllFixtures, state => ({ ...state, allFixturesFlag: !state.allFixturesFlag })),
+  on(ConfigActions.ToggleHeadless, state => ({ ...state, headlessFlag: !state.headlessFlag })),
   // Fixture Actions
-  on(ConfigActions.useAllFixtures, state => ({ ...state, browsers: ['./testing/fixtures'] })),
-  on(ConfigActions.clearAllFixtures, state => ({ ...state, src: [] })),
-  on(ConfigActions.addFixture, (state, { fixture }) => ({
+  on(ConfigActions.UseAllFixtures, state => ({ ...state, browsers: ['../testing/fixtures'] })),
+  on(ConfigActions.ClearAllFixtures, state => ({ ...state, src: [] })),
+  on(ConfigActions.AddFixture, (state, { fixture }) => ({
     ...state,
     src: [...state.src, fixture]
   })),
-  on(ConfigActions.removeFixture, (state, { fixture }) => ({
+  on(ConfigActions.RemoveFixture, (state, { fixture }) => ({
     ...state,
-    src: state.src.splice(state.src.indexOf(fixture), 1)
+    src: state.src.filter(val => val !== fixture)
   })),
   // Send Data Actions
-  on(ConfigActions.submitConfig, state => state),
-  on(ConfigActions.successSubmitConfig, (state, payload) => {
-    return { ...state, sendConfigError: null };
+  on(ConfigActions.SendConfig, state => state),
+  on(ConfigActions.SendConfigSuccess, (state, payload) => {
+    return { ...state, scError: null };
   }),
-  on(ConfigActions.errorSubmitConfig, (state, error: Error) => {
+  on(ConfigActions.SendConfigFail, (state, error: Error) => {
     console.error(error);
-    return { ...state, sendConfigError: error };
+    return { ...state, scError: error };
   }),
 );
 

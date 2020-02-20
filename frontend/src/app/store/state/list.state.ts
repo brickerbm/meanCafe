@@ -1,15 +1,15 @@
-import { Report } from '../../models/ngrxReport.model';
+import { Report } from '../../models';
 
 export interface ListState {
-  reportList: Report[];
+  reports: Report[];
   targetReport: Report;
-  getError: Error;
-  deleteError: Error;
+  gError: Error;
+  dError: Error;
 }
 
 export const initialListState: ListState = {
-  reportList: [],
+  reports: [],
   targetReport: null,
-  getError: null,
-  deleteError: null,
+  gError: null,
+  dError: null,
 };

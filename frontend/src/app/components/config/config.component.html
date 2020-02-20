@@ -1,48 +1,100 @@
-<mat-card>
-  <mat-card-title>
-    Test Configuration
-  </mat-card-title>
+<ng-container *ngIf="config$ | async as config">
 
-  <mat-card-content>
-      <div class="box box-default">
-          <code>
-            <pre>{{ config | json }}</pre>
-          </code>
-          <!-- <br>
-          <pre>{{ fixList| json }}</pre> -->
-          <!-- <pre>{{ myBrowsers | json }}</pre>
-          <br>
-          <pre>{{ mySrc | json }}</pre> -->
-        </div>
-    <form>
-      <table>
-        <tr>
-          <td>
-            <span>Browsers</span><br><br>
-            <mat-checkbox checked="allBrowsers" (click)="toggleAllBrowsers()">Use all browsers</mat-checkbox>
-            <div *ngIf="!allBrowsers">
-              <mat-checkbox *ngFor="let browser of browsers" (click)="chooseBrowser(browser.tag)">{{ browser.name }}</mat-checkbox>
-            </div>
-            <br>
-            <mat-slide-toggle checked="runHeadless" (click)="toggleRunHeadless()">Run headless</mat-slide-toggle>
-          </td>
-          <br>
-        </tr>
+  <div>
+    <div>
+      <h3>Browsers</h3>
+      <mat-grid-list cols="2" rowHeight="48px">
+        <mat-grid-tile *ngFor="let browser of browsers">
+          <mat-checkbox
+          [checked]="config.allBrowsersFlag"
+          [disabled]="config.allBrowsersFlag"
+          (change)="onBrowserClick($event.checked, browser.tag)">
+            {{ browser.name }}
+          </mat-checkbox>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
 
-        <br><br>
+    <div>
+      <mat-grid-list cols="2" rowHeight="48px">
+        <mat-grid-tile>
+          <mat-slide-toggle
+          [checked]="config.allBrowsersFlag"
+          (change)="toggleAllBrowsers(config.allBrowsersFlag.valueOf())">
+            Use all browsers
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-slide-toggle
+          [checked]="config.headlessFlag"
+          (change)="toggleHeadless()">
+            Run Headless
+          </mat-slide-toggle>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
 
-        <tr>
-          <td>
-            <span>Fixtures</span><br><br>
-            <mat-checkbox checked="allFixtures" (click)="toggleAllFixtures()">Use all fixtures</mat-checkbox>
-            <div *ngIf="!allFixtures">
-              <mat-checkbox *ngFor="let fixture of fixList" (click)="chooseFixture(fixture)">{{ peelFixtureName(fixture) }}</mat-checkbox>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </mat-card-content>
-  <button mat-raised-button color="primary" (click)="runTests()">Run Tests</button>
-  <button mat-raised-button color="warning" routerLink="/list">Cancel</button>
-</mat-card>
+  <div *ngIf="!config.fError">
+    <div>
+      <h3>Fixtures</h3>
+      <mat-grid-list cols="3" rowHeight="48px">
+        <mat-grid-tile *ngFor="let fixture of config.fixtures">
+          <mat-checkbox
+          [checked]="config.allFixturesFlag"
+          [disabled]="config.allFixturesFlag"
+          (change)="onFixtureClick($event.checked, fixture)">
+            {{ fixture }}
+          </mat-checkbox>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div>
+      <mat-grid-list cols="3" rowHeight="48px">
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <mat-slide-toggle
+          [checked]="config.allFixturesFlag"
+          (change)="toggleAllFixtures(config.allFixturesFlag.valueOf())">
+            Run all fixtures
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+  <!-- FERROR MESSAGE? -->
+  <!-- SCERROR MESSAGE? -->
+
+  <div>
+    <mat-grid-list cols="2" rowHeight="48px">
+      <mat-grid-tile>
+        <button
+        mat-raised-button
+        color="warn"
+        routerLink="/list">
+          Back
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button
+        mat-raised-button
+        color="primary"
+        [disabled]="config.src.length === 0 || config.browsers.length === 0"
+        (click)="onSubmit(config.browsers, config.src, config.headlessFlag)">
+          Run
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div>
+    <p>{{ config.browsers }}</p>
+    <p>{{ config.headlessFlag.valueOf() }}</p>
+    <p>{{ config.allBrowsersFlag.valueOf() }}</p>
+    <p>{{ config.src }}</p>
+    <p>{{ config.allFixturesFlag.valueOf() }}</p>
+  </div>
+
+</ng-container>

@@ -38,7 +38,13 @@ export class InMemoryDataService implements InMemoryDbService {
         warnings: []
       }
     ];
-    return {reports};
+    const fixtures = [
+      'lp.fixture.ts',
+      'home.fixture.ts',
+      'other.fixture.ts',
+      'last.fixture.ts'
+    ];
+    return {reports, fixtures};
   }
 
   genId(reports: Report[]): number {

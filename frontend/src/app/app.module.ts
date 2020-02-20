@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule,
         MatFormFieldModule,
+        MatGridListModule,
         MatExpansionModule,
         MatInputModule,
         MatOptionModule,
@@ -53,6 +54,7 @@ import { reducers, effects } from './store';
     MatToolbarModule,
     MatInputModule,
     MatOptionModule,
+    MatGridListModule,
     MatSelectModule,
     MatIconModule,
     MatButtonModule,

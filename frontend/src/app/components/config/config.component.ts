@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IConfig } from 'src/app/models/config.model';
-import { ConfigBuilderService } from 'src/app/services/config-builder.service';
-import { FixtureService } from 'src/app/services/fixture.service';
-import { Router } from '@angular/router';
-import { ConfigService } from 'src/app/services/config.service';
+import { Config } from '../../models';
+import * as fromStore from '../../store';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-config',
@@ -12,103 +11,69 @@ import { ConfigService } from 'src/app/services/config.service';
 })
 export class ConfigComponent implements OnInit {
 
-  allBrowsers = true;
-  runHeadless = true;
-  runDocker = false;
-  allFixtures = true;
-  skipErrors = true;
-
   browsers = [
-    {name: 'Google Chrome', tag: 'chrome'},
-    {name: 'Google Chrome Canary', tag: 'chrome-canary'},
-    {name: 'Chromium', tag: 'chromium'},
-    {name: 'Internet Explorer', tag: 'ie'},
-    {name: 'Microsoft Edge', tag: 'edge'},
-    {name: 'Mozilla Firefox', tag: 'firefox'},
-    {name: 'Opera', tag: 'opera'},
-    {name: 'Safari', tag: 'safari'},
+    {name: 'Google Chrome', tag: 'chrome', checked: false},
+    {name: 'Google Chrome Canary', tag: 'chrome-canary', checked: false},
+    {name: 'Chromium', tag: 'chromium', checked: false},
+    {name: 'Internet Explorer', tag: 'ie', checked: false},
+    {name: 'Microsoft Edge', tag: 'edge', checked: false},
+    {name: 'Mozilla Firefox', tag: 'firefox', checked: false},
+    {name: 'Opera', tag: 'opera', checked: false},
+    {name: 'Safari', tag: 'safari', checked: false},
   ];
 
-  // fixtures = [
-  //   {name: 'test1', path: './fixtures/test1.ts'},
-  //   {name: 'test2', path: './fixtures/test2.ts'},
-  //   {name: 'test3', path: './fixtures/test3.ts'}
-  // ];
+  config$: Observable<fromStore.ConfigState> = this.store.pipe(
+    select(fromStore.selectConfig)
+  );
 
-  fixList: string[];
-
-  config: IConfig;
-  myBrowsers: string[];
-  mySrc: string[];
-
-  constructor(private cbs: ConfigBuilderService, private cs: ConfigService, private fs: FixtureService, private router: Router) {
+  constructor(private store: Store<fromStore.AppState>) {
+    this.store.dispatch(fromStore.GetFixtures());
   }
 
-  ngOnInit() {
-    this.fetchFixtures();
-    this.cbs.currentConfig.subscribe(currentConf => this.config = currentConf);
-    this.cbs.curBrowsers.subscribe(curBrow => this.myBrowsers = curBrow);
-    this.cbs.curSrc.subscribe(cSrc => this.mySrc = cSrc);
-    this.resetConfig();
-    // console.log('All Browsers On: ' + this.allBrowsers);
-    // console.log('All Fixtures On: ' + this.allFixtures);
-    // console.log('Headless: ' + this.runHeadless);
-  }
+  ngOnInit() {}
 
-  fetchFixtures() {
-    this.fs
-      .getFixtures()
-      .subscribe((data: string[]) => {
-        this.fixList = data;
-        console.log('Data requested...');
-        console.log(this.fixList);
-      });
-  }
-
-  toggleAllBrowsers() {
-    this.allBrowsers = !this.allBrowsers;
-    this.cbs.toggleAllBrowsers(this.runHeadless, this.allBrowsers);
-  }
-
-  toggleAllFixtures() {
-    this.allFixtures = !this.allFixtures;
-    this.cbs.toggleAllFixtures(this.allFixtures);
-  }
-
-  toggleRunHeadless() {
-    this.runHeadless = !this.runHeadless;
-    this.cbs.toggleHeadless();
-  }
-
-  chooseBrowser(browser: string) {
-    if (this.runHeadless) {
-      console.log(browser + ':headless');
-      this.cbs.toggleBrowser(browser + ':headless');
+  toggleAllBrowsers(flag: boolean) {
+    this.store.dispatch(fromStore.ToggleAllBrowsers());
+    if (!flag) {
+      this.store.dispatch(fromStore.UseAllBrowsers());
     } else {
-      console.log(browser);
-      this.cbs.toggleBrowser(browser);
+      this.store.dispatch(fromStore.ClearAllBrowsers());
     }
   }
 
-  peelFixtureName(path: string) {
-    return path.replace('.fixture.ts', '');
+  toggleAllFixtures(flag: boolean) {
+    this.store.dispatch(fromStore.ToggleAllFixtures());
+    if (!flag) {
+      this.store.dispatch(fromStore.UseAllFixtures());
+    } else {
+      this.store.dispatch(fromStore.ClearAllFixtures());
+    }
   }
 
-  chooseFixture(fixture: string) {
-    console.log(fixture);
-    this.cbs.toggleFixture('./testing/fixtures/' + fixture);
+  toggleHeadless() {
+    this.store.dispatch(fromStore.ToggleHeadless());
   }
 
-  resetConfig() {
-    this.cbs.toggleAllBrowsers(this.runHeadless, this.allBrowsers);
-    this.cbs.toggleAllFixtures(this.allFixtures);
+  onBrowserClick(checked: boolean, browser: string) {
+    if (checked) {
+      this.store.dispatch(fromStore.AddBrowser({ browser }));
+    } else {
+      this.store.dispatch(fromStore.RemoveBrowser({ browser }));
+    }
   }
 
-  runTests() {
-    // this.cs.addConfig(this.config);
-    this.cs.writeConfigFile(this.config);
-    // console.log(this.cs.writeConfigFile(this.config));
-    // child process run tests
-    this.router.navigateByUrl('list');
+  onFixtureClick(checked: boolean, fixture: string) {
+    if (checked) {
+      this.store.dispatch(fromStore.AddFixture({ fixture }));
+    } else {
+      this.store.dispatch(fromStore.RemoveFixture({ fixture }));
+    }
+  }
+
+  onSubmit(browsers: string[], src: string[], headless: boolean) {
+    const config: Config = { browsers, src, headless };
+    console.log(config);
+    // this.store.dispatch(fromStore.SendConfig({ config }));
+    // TODO add spinner and route to list component after completion
   }
 }

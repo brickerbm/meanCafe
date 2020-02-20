@@ -6,26 +6,30 @@ import { initialListState, ListState } from '../state/list.state';
 const listReducer = createReducer(
   initialListState,
   // Get list of reports
-  on(ListActions.getReports, state => state),
-  on(ListActions.successGetReports, (state, { reports }) => {
-    return { ...state, reportList: reports, reportsError: null };
+  on(ListActions.GetReports, state => state),
+  on(ListActions.GetReportsSuccess, (state, { reportsList }) => {
+    return { ...state, reports: reportsList, gError: null };
   }),
-  on(ListActions.errorGettingReports, (state, error: Error) => {
+  on(ListActions.GetReportsFail, (state, error: Error) => {
     console.error(error);
-    return { ...state, getError: error };
+    return { ...state, gError: error };
   }),
   // Set selected report
-  on(ListActions.setSelectedReport, (state, { report }) => {
+  on(ListActions.SetTargetReport, (state, { report }) => {
     return { ...state, targetReport: report };
   }),
   // Delete report
-  on(ListActions.deleteReport, state => state),
-  on(ListActions.successDeleteReport, (state, { report }) => { // Return new list in response payload
-    return { ...state, deleteError: null };
+  on(ListActions.DeleteReport, state => state),
+  on(ListActions.DeleteReportSuccess, (state, { report }) => { // Return new list in response payload
+    return {
+      ...state,
+      reports: state.reports.filter(val => val !== report),
+      dError: null
+    };
   }),
-  on(ListActions.errorDeletingReport, (state, error: Error) => {
+  on(ListActions.DeleteReportFail, (state, error: Error) => {
     console.error(error);
-    return { ...state, deleteError: error };
+    return { ...state, dError: error };
   }),
 );
 
