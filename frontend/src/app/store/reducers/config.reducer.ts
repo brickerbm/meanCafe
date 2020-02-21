@@ -29,7 +29,7 @@ export const configReducer = createReducer(
   on(ConfigActions.ToggleAllFixtures, state => ({ ...state, allFixturesFlag: !state.allFixturesFlag })),
   on(ConfigActions.ToggleHeadless, state => ({ ...state, headlessFlag: !state.headlessFlag })),
   // Fixture Actions
-  on(ConfigActions.UseAllFixtures, state => ({ ...state, browsers: ['../testing/fixtures'] })),
+  on(ConfigActions.UseAllFixtures, state => ({ ...state, src: ['../testing/fixtures'] })),
   on(ConfigActions.ClearAllFixtures, state => ({ ...state, src: [] })),
   on(ConfigActions.AddFixture, (state, { fixture }) => ({
     ...state,
