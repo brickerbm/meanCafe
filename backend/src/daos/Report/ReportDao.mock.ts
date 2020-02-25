@@ -1,4 +1,4 @@
-import { IReportDao } from './reportDao';
+import { IReportDao } from './ReportDao';
 import { MockDaoMock } from '../MockDb/MockDao.mock';
 import { getRandomInt } from '@shared';
 import { Report } from '@entities';

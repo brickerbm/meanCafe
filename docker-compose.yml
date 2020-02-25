@@ -1,9 +1,30 @@
-version: '3'
+version: '3.7'
 
 services:
+  database:
+    image: amazon/dynamodb-local
+    container_name: database
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/Users/ben/Development/meanCafe/data/"]
+    volumes:
+      - db_data:/Users/ben/Development/meanCafe/data
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "3000:3000"
+    links:
+      - database
+
   frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
+    build: ./frontend
+    container_name: frontend
     ports: 
       - "4200:4200"
+    links:
+      - backend
+
+volumes:
+  db_data:
